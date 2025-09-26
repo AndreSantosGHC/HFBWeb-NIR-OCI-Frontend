@@ -1,0 +1,24 @@
+<p-card header="Prescrições Médicas">
+  <app-universal-datatable
+    entity="prescricao-medica"
+    CreateLabel="Cadastrar Prescrição Médica"
+    [columns]="columns"
+    [showEditAction]="true"
+    [showDeleteAction]="true"
+    (onCreate)="redirectToCreate()"
+    (onEdit)="editar($event)"
+    (onDelete)="excluir($event)">
+
+    <ng-template #bodyTemplate let-rowData let-column="column">
+      <ng-container [ngSwitch]="column.field">
+        <span *ngSwitchDefault>
+          {{ rowData[column.field] }}
+        </span>
+      </ng-container>
+    </ng-template>
+
+  </app-universal-datatable>
+</p-card>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

@@ -1,0 +1,16 @@
+<!-- token-expired-popup.html -->
+<p-toast key="token-expired" position="top-center" [baseZIndex]="10000">
+  <ng-template pTemplate="message">
+    <div class="token-expired-toast">
+      <div class="title">Sessão Expirada</div>
+      <div class="message">Sua sessão expirou. Por favor, faça login novamente.</div>
+      <div class="col-12 flex justify-content-end gap-2 mt-4">
+        <button pButton
+                type="button"
+                label="Fazer Login"
+                class="p-button-primary"
+                (click)="onLogin()"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>

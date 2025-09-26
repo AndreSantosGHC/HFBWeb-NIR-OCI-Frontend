@@ -1,0 +1,28 @@
+.token-expired-toast {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* centraliza horizontalmente */
+    text-align: center;
+    /* centraliza o texto */
+    max-width: 350px;
+    /* limita largura */
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.token-expired-toast .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.token-expired-toast .message {
+    font-size: 1rem;
+}
+
+.token-expired-toast .actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    width: 100%;
+}

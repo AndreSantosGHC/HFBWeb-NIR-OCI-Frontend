@@ -1,0 +1,24 @@
+<p-card header="Fila Cirúrgica Unificada">
+  <app-universal-datatable
+    entity="fila-cirurgica-unificada"
+    CreateLabel="Cadastrar na Fila Cirúrgica"
+    [columns]="columns"
+    [showEditAction]="true"
+    [showDeleteAction]="true"
+    (onCreate)="redirectToCreate()"
+    (onEdit)="editar($event)"
+    (onDelete)="excluir($event)">
+
+    <ng-template #bodyTemplate let-rowData let-column="column">
+      <ng-container [ngSwitch]="column.field">
+        <span *ngSwitchDefault>
+          {{ column.field === 'pacienteNome' ? rowData.pacienteNome : rowData[column.field] }}
+        </span>
+      </ng-container>
+    </ng-template>
+
+  </app-universal-datatable>
+</p-card>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

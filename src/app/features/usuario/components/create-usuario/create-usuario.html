@@ -1,0 +1,125 @@
+<!-- src/features/usuario/pages/create-usuario.component.html -->
+<p-card [header]="isEditMode ? 'Editar Usuário' : 'Cadastro de Usuário'" class="card">
+  <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="p-fluid">
+
+    <!-- NOME -->
+    <div class="p-field col-12 md:col-6">
+      <label for="nome" class="block mb-2">
+        <b class="text-red-600 mr-1">*</b> Nome
+      </label>
+      <input
+        id="nome"
+        pInputText
+        formControlName="nome"
+        [class.p-invalid]="nome.invalid && (nome.dirty || nome.touched)"
+        class="w-full"
+      />
+      @if (nome.invalid && (nome.dirty || nome.touched)) {
+        <small class="p-error block mt-1">
+          Nome é obrigatório.
+        </small>
+      }
+    </div>
+
+    <!-- EMAIL -->
+    <div class="p-field col-12 md:col-6">
+      <label for="email" class="block mb-2">Email</label>
+      <input
+        id="email"
+        type="email"
+        pInputText
+        formControlName="email"
+        [class.p-invalid]="cadastroForm.get('email')?.invalid && (cadastroForm.get('email')?.dirty || cadastroForm.get('email')?.touched)"
+        class="w-full"
+      />
+      @if (cadastroForm.get('email')?.invalid && (cadastroForm.get('email')?.dirty || cadastroForm.get('email')?.touched)) {
+        <small class="p-error block mt-1">
+          Email deve ser válido.
+        </small>
+      }
+    </div>
+
+    <!-- USUÁRIO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="usuario" class="block mb-2">Usuário</label>
+      <input
+        id="usuario"
+        pInputText
+        formControlName="usuario"
+        class="w-full"
+      />
+    </div>
+
+    <!-- SENHA (apenas no cadastro) -->
+    @if (!isEditMode) {
+      <div class="p-field col-12 md:col-6">
+        <label for="senha" class="block mb-2">Senha</label>
+        <p-password
+          id="senha"
+          formControlName="senha"
+          [feedback]="false"
+          [toggleMask]="true"
+          class="w-full"
+        ></p-password>
+      </div>
+    }
+
+    <!-- STATUS -->
+    <!-- <div class="p-field col-12 md:col-6">
+      <label for="status" class="block mb-2">Status</label>
+      <p-select
+        id="status"
+        formControlName="status"
+        [options]="statusOptions"
+        [showClear]="true"
+        placeholder="Selecione o status"
+        class="w-full"
+      ></p-select>
+    </div> -->
+
+    <!-- CÓDIGO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="codigo" class="block mb-2">Código</label>
+      <input
+        id="codigo"
+        pInputText
+        formControlName="codigo"
+        class="w-full"
+      />
+    </div>
+
+    <!-- DESCRIÇÃO -->
+    <div class="p-field col-12">
+      <label for="descricao" class="block mb-2">Descrição</label>
+      <textarea
+        id="descricao"
+        pInputTextarea
+        formControlName="descricao"
+        rows="3"
+        class="w-full"
+      ></textarea>
+    </div>
+
+    <!-- BOTÕES -->
+    <div class="col-12 flex gap-2 justify-end mt-4">
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-secondary"
+        (click)="cancelar()"
+      ></button>
+
+      <button
+        pButton
+        type="submit"
+        [label]="isEditMode ? 'Atualizar' : 'Salvar'"
+        icon="pi pi-check"
+        [disabled]="cadastroForm.invalid"
+      ></button>
+    </div>
+
+  </form>
+</p-card>
+<p-toast />

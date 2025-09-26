@@ -1,0 +1,44 @@
+<p-card header="Listagem de Doenças">
+  <app-universal-datatable
+    entity="doenca"
+    CreateLabel="Cadastrar Doença"
+    [rows]="10"
+    [columns]="columns"
+    (onEdit)="editarDoenca($event)"
+    (onDelete)="excluirDoenca($event)"
+    (onCreate)="redirectToCadastro()"
+    [includeInactive]="false">
+
+    <ng-template #bodyTemplate let-item="item" let-column="column">
+      @switch (column.field) {
+        @case ('ativo') {
+          <p-tag
+            [value]="item.ativo === true ? 'Ativo' : 'Inativo'"
+            [severity]="item.ativo === true ? 'success' : 'danger'"
+          />
+        }
+        @case ('actions') {
+          <div class="flex gap-1">
+            <button pButton
+                    type="button"
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text p-button-primary"
+                    (click)="editarDoenca(item)"></button>
+            <button pButton
+                    type="button"
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-text p-button-danger"
+                    (click)="excluirDoenca(item)"></button>
+          </div>
+        }
+        @default {
+          {{ getNestedValue(item, column.field) }}
+        }
+      }
+    </ng-template>
+
+  </app-universal-datatable>
+</p-card>
+
+<p-toast />
+<p-confirmDialog />

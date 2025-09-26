@@ -1,0 +1,290 @@
+<!-- src/features/paciente/pages/create-paciente.component.html -->
+<p-card [header]="isEditMode ? 'Editar Paciente' : 'Cadastro de Paciente'" class="card">
+  <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()"
+  class="p-fluid">
+
+    <!-- PRONTUARIO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="prontuario" class="block mb-2">
+        <b class="text-red-600 mr-1">*</b> Prontuário
+      </label>
+      <input
+        id="prontuario"
+        pInputText
+        formControlName="prontuario"
+        [class.p-invalid]="prontuario.invalid && (prontuario.dirty || prontuario.touched)"
+        class="w-full"
+      />
+      @if (prontuario.invalid && (prontuario.dirty || prontuario.touched)) {
+        <small class="p-error block mt-1">
+          @if (prontuario.errors?.['required']) {
+            Prontuário é obrigatório.
+          }
+          @if (prontuario.errors?.['maxlength']) {
+            Prontuário deve ter no máximo 20 caracteres.
+          }
+        </small>
+      }
+    </div>
+
+    <!-- NOME COMPLETO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="nome" class="block mb-2">
+        <b class="text-red-600 mr-1">*</b> Nome Completo
+      </label>
+      <input
+        id="nome"
+        pInputText
+        formControlName="nome"
+        [class.p-invalid]="nome.invalid && (nome.dirty || nome.touched)"
+        class="w-full"
+      />
+      @if (nome.invalid && (nome.dirty || nome.touched)) {
+        <small class="p-error block mt-1">
+          @if (nome.errors?.['required']) {
+            Nome completo é obrigatório.
+          }
+          @if (nome.errors?.['minlength']) {
+            Nome completo deve ter pelo menos 5 caracteres.
+          }
+          @if (nome.errors?.['maxlength']) {
+            Nome completo deve ter no máximo 100 caracteres.
+          }
+        </small>
+      }
+    </div>
+
+    <!-- NOME SOCIAL -->
+    <div class="p-field col-12 md:col-6">
+      <label for="nomeSocial" class="block mb-2">Nome Social</label>
+      <input
+        id="nomeSocial"
+        pInputText
+        formControlName="nomeSocial"
+        [class.p-invalid]="nomeSocial.invalid && (nomeSocial.dirty || nomeSocial.touched)"
+        class="w-full"
+      />
+      @if (nomeSocial.invalid && (nomeSocial.dirty || nomeSocial.touched)) {
+        <small class="p-error block mt-1">
+          @if (nomeSocial.errors?.['maxlength']) {
+            Nome social deve ter no máximo 100 caracteres.
+          }
+        </small>
+      }
+    </div>
+
+    <!-- NOME DA MÃE -->
+    <div class="p-field col-12 md:col-6">
+      <label for="nomeMae" class="block mb-2">Nome da Mãe</label>
+      <input
+        id="nomeMae"
+        pInputText
+        formControlName="nomeMae"
+        [class.p-invalid]="nomeMae.invalid && (nomeMae.dirty || nomeMae.touched)"
+        class="w-full"
+      />
+      @if (nomeMae.invalid && (nomeMae.dirty || nomeMae.touched)) {
+        <small class="p-error block mt-1">
+          @if (nomeMae.errors?.['minlength']) {
+            Nome da mãe deve ter pelo menos 5 caracteres.
+          }
+          @if (nomeMae.errors?.['maxlength']) {
+            Nome da mãe deve ter no máximo 100 caracteres.
+          }
+        </small>
+      }
+    </div>
+
+    <!-- DATA DE NASCIMENTO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="dataNascimento" class="block mb-2">Data de Nascimento</label>
+      <p-datepicker
+        id="dataNascimento"
+        formControlName="dataNascimento"
+        [showIcon]="true"
+        dateFormat="dd/mm/yy"
+        [maxDate]="maxDate"
+        [showButtonBar]="true"
+        class="w-full"
+      ></p-datepicker>
+    </div>
+
+    <!-- CPF -->
+    <div class="p-field col-12 md:col-6">
+      <label for="cpf" class="block mb-2">CPF</label>
+      <input
+        id="cpf"
+        pInputText
+        formControlName="cpf"
+        [class.p-invalid]="cpf.invalid && (cpf.dirty || cpf.touched)"
+        placeholder="000.000.000-00"
+        class="w-full"
+      />
+      @if (cpf.invalid && (cpf.dirty || cpf.touched)) {
+        <small class="p-error block mt-1">
+          CPF deve estar no formato 000.000.000-00 ou 11 dígitos.
+        </small>
+      }
+    </div>
+
+    <!-- CARTÃO SUS -->
+    <div class="p-field col-12 md:col-6">
+      <label for="cartaoSus" class="block mb-2">Cartão SUS</label>
+      <input
+        id="cartaoSus"
+        pInputText
+        formControlName="cartaoSus"
+        [class.p-invalid]="cartaoSus.invalid && (cartaoSus.dirty || cartaoSus.touched)"
+        placeholder="15 dígitos"
+        class="w-full"
+      />
+      @if (cartaoSus.invalid && (cartaoSus.dirty || cartaoSus.touched)) {
+        <small class="p-error block mt-1">
+          Cartão SUS deve ter 15 dígitos.
+        </small>
+      }
+    </div>
+
+    <!-- TELEFONE -->
+    <div class="p-field col-12 md:col-6">
+      <label for="telefone" class="block mb-2">Telefone</label>
+      <input
+        id="telefone"
+        pInputText
+        formControlName="telefone"
+        [class.p-invalid]="telefone.invalid && (telefone.dirty || telefone.touched)"
+        placeholder="(00) 00000-0000"
+        class="w-full"
+      />
+      @if (telefone.invalid && (telefone.dirty || telefone.touched)) {
+        <small class="p-error block mt-1">
+          Telefone deve estar no formato (00) 0000-0000 ou (00) 00000-0000.
+        </small>
+      }
+    </div>
+
+    <!-- TELEFONE RESPONSÁVEL -->
+    <div class="p-field col-12 md:col-6">
+      <label for="telefoneResponsavel" class="block mb-2">Telefone do Responsável</label>
+      <input
+        id="telefoneResponsavel"
+        pInputText
+        formControlName="telefoneResponsavel"
+        [class.p-invalid]="telefoneResponsavel.invalid && (telefoneResponsavel.dirty || telefoneResponsavel.touched)"
+        placeholder="(00) 00000-0000"
+        class="w-full"
+      />
+      @if (telefoneResponsavel.invalid && (telefoneResponsavel.dirty || telefoneResponsavel.touched)) {
+        <small class="p-error block mt-1">
+          Telefone deve estar no formato (00) 0000-0000 ou (00) 00000-0000.
+        </small>
+      }
+    </div>
+
+    <!-- RESPONSÁVEL -->
+    <div class="p-field col-12 md:col-6">
+      <label for="responsavel" class="block mb-2">Nome do Responsável</label>
+      <input
+        id="responsavel"
+        pInputText
+        formControlName="responsavel"
+        [class.p-invalid]="responsavel.invalid && (responsavel.dirty || responsavel.touched)"
+        class="w-full"
+      />
+      @if (responsavel.invalid && (responsavel.dirty || responsavel.touched)) {
+        <small class="p-error block mt-1">
+          @if (responsavel.errors?.['minlength']) {
+            Nome do responsável deve ter pelo menos 5 caracteres.
+          }
+          @if (responsavel.errors?.['maxlength']) {
+            Nome do responsável deve ter no máximo 100 caracteres.
+          }
+        </small>
+      }
+    </div>
+
+    <!-- SEXO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="sexo" class="block mb-2">Sexo</label>
+      <p-select
+        id="sexo"
+        formControlName="sexo"
+        [options]="sexoOptions"
+        [showClear]="true"
+        placeholder="Selecione o sexo"
+        class="w-full"
+      ></p-select>
+      @if (sexo.invalid && (sexo.dirty || sexo.touched)) {
+        <small class="p-error block mt-1">
+          Sexo deve ser M (Masculino), F (Feminino) ou I (Intersexo).
+        </small>
+      }
+    </div>
+
+    <!-- ETNIA -->
+    <div class="p-field col-12 md:col-6">
+      <label for="etnia" class="block mb-2">Etnia</label>
+      <p-select
+        id="etnia"
+        formControlName="etnia"
+        [options]="etniaOptions"
+        [showClear]="true"
+        placeholder="Selecione a etnia"
+        class="w-full"
+      ></p-select>
+      @if (etnia.invalid && (etnia.dirty || etnia.touched)) {
+        <small class="p-error block mt-1">
+          Selecione uma etnia válida.
+        </small>
+      }
+    </div>
+
+    <!-- ENDEREÇO COMPONENT -->
+    <!-- <div class="p-field col-12">
+      <label class="block mb-2">Endereço</label>
+      <app-endereco-form
+        [endereco]="cadastroForm.get('endereco')?.value"
+        (enderecoChange)="onEnderecoChange($event)"
+      ></app-endereco-form>
+    </div> -->
+
+    <!-- OBSERVAÇÕES -->
+    <div class="p-field col-12">
+      <label for="observacoes" class="block mb-2">Observações</label>
+      <textarea
+        id="observacoes"
+        pInputTextarea
+        formControlName="observacoes"
+        rows="3"
+        [class.p-invalid]="observacoes.invalid && (observacoes.dirty || observacoes.touched)"
+        class="w-full"
+      ></textarea>
+      @if (observacoes.invalid && (observacoes.dirty || observacoes.touched)) {
+        <small class="p-error block mt-1">
+          Observações devem ter no máximo 500 caracteres.
+        </small>
+      }
+    </div>
+
+    <!-- BOTÕES -->
+    <div class="col-12 flex gap-2 justify-end mt-4">
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-secondary"
+        (click)="cancelar()"
+      ></button>
+
+      <button
+        pButton
+        type="submit"
+        [label]="isEditMode ? 'Atualizar' : 'Salvar'"
+        icon="pi pi-check"
+        [disabled]="cadastroForm.invalid"
+      ></button>
+    </div>
+
+  </form>
+</p-card>

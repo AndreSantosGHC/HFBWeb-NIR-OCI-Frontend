@@ -1,0 +1,69 @@
+<p-card [header]="isEditMode ? 'Editar Solicitação' : 'Nova Solicitação'">
+    <form [formGroup]="form" class="p-fluid">
+
+        <!-- Paciente -->
+        <div class="field mb-4">
+            <label for="paciente">Paciente</label>
+            <p-select
+                id="paciente"
+                formControlName="pacienteId"
+                [options]="filteredPacientes"
+                optionLabel="nome"
+                [filter]="true"
+                (onFilter)="searchPacientes($event)"
+                filterBy="nome"
+                placeholder="Selecione o paciente"
+                [virtualScroll]="true"
+                [virtualScrollItemSize]="10"
+                [class]="'w-full' + (form.get('pacienteId')?.invalid && form.get('pacienteId')?.touched ? ' p-invalid' : '')">
+
+                <ng-template let-option pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <div>
+                            <div>{{ option.nome }}</div>
+                            <small class="text-color-secondary">
+                                Prontuário: {{ option.prontuario }}
+                            </small>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-select>
+        </div>
+
+        <!-- Exames -->
+        <!-- <div class="field mb-4">
+            <label>Exames</label>
+            <div formGroupName="exames" class="grid gap-3">
+                <div class="col-12 md:col-6 lg:col-4 xl:col-3" *ngFor="let exame of examesOptions">
+                    <p-checkbox
+                        [formControlName]="exame"
+                        binary="true"
+                        inputId="{{exame}}">
+                    </p-checkbox>
+                    <label [for]="exame" class="ml-2">{{exame}}</label>
+                </div>
+            </div>
+        </div> -->
+        <div class="field mb-4">
+            <label>Exames</label>
+                <div formGroupName="exames" class="exames-grid">
+                    <div *ngFor="let exame of examesOptions" class="exame-item">
+                        <p-checkbox
+                        [formControlName]="exame"
+                        binary="true"
+                        inputId="{{exame}}">
+                        </p-checkbox>
+                        <label [for]="exame" class="ml-2">{{exame}}</label>
+                    </div>
+                </div>
+        </div>
+
+
+        <!-- Botões -->
+        <div class="flex justify-content-end gap-2 mt-4">
+            <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="cancelar()"></button>
+            <button pButton type="submit" label="Salvar" [disabled]="form.invalid"></button>
+            <button *ngIf="isEditMode" pButton type="button" label="Imprimir" icon="pi pi-print" (click)="imprimir()"></button>
+        </div>
+    </form>
+</p-card>

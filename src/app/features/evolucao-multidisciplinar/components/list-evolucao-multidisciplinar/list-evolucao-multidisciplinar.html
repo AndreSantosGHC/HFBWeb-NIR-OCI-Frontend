@@ -1,0 +1,18 @@
+<p-card header="Listagem de Evoluções">
+  <app-universal-datatable
+    entity="evolucao-multidisciplinar"
+    CreateLabel="Nova Evolução"
+    [rows]="10"
+    [columns]="columns"
+    (onEdit)="editarEvolucao($event)"
+    (onDelete)="excluirEvolucao($event)"
+    (onCreate)="redirectToCreate()">
+
+    <ng-template #bodyTemplate let-item="item" let-column="column">
+      {{ getNestedValue(item, column.field) }}
+    </ng-template>
+
+  </app-universal-datatable>
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+</p-card>

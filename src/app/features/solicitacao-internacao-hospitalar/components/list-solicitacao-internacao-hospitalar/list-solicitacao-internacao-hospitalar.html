@@ -1,0 +1,9 @@
+<p-card header="Solicitações de Internação Hospitalar">
+    <app-universal-datatable entity="solicitacao-internacao-hospitalar"
+        CreateLabel="Cadastrar Solicitação de Internação" [columns]="columns" [showEditAction]="true"
+        [showDeleteAction]="true" (onEdit)="editar($event)" (onCreate)="redirectToCreate()" (onDelete)="excluir($event)">
+    </app-universal-datatable>
+</p-card>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

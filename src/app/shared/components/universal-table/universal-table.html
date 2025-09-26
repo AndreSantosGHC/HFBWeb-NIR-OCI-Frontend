@@ -1,0 +1,146 @@
+<div class="card">
+    @if (showToolbar) {
+        <p-toolbar>
+            <div class="p-toolbar-group-start">
+                <h2>{{ title }}</h2>
+            </div>
+
+            <div class="p-toolbar-group-end">
+                <button
+                    pButton
+                    icon="pi pi-plus"
+                    [label]="CreateLabel"
+                    class="p-button-success mr-2"
+                    (click)="handleCreate()">
+                </button>
+
+                @if (showExport) {
+                    <p-splitButton
+                        label="Exportar"
+                        icon="pi pi-download"
+                        [model]="exportItems"
+                        [disabled]="loading"
+                        class="">
+                    </p-splitButton>
+                }
+
+                <button
+                    pButton
+                    label="Limpar filtros"
+                    icon="pi pi-filter-slash"
+                    class="p-button-secondary ml-2"
+                    (click)="clearFilters()" pTooltip="Limpar filtros"></button>
+
+                <button
+                    pButton
+                    label="Atualizar"
+                    icon="pi pi-refresh"
+                    class="p-button-secondary ml-2"
+                    (click)="refresh()"
+                    [disabled]="loading">
+                </button>
+            </div>
+        </p-toolbar>
+    }
+
+    <p-table
+        #table
+        showGridlines
+        [value]="data"
+        [lazy]="true"
+        [loading]="loading"
+        [totalRecords]="totalRecords"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} à {last} de {totalRecords} registros."
+        [rows]="rows"
+        [paginator]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        (onLazyLoad)="loadData($event)"
+        [selectionMode]="selectionMode"
+        (onRowSelect)="onRowSelect($event)"
+        dataKey="id"
+        [scrollable]="true"
+        scrollHeight="400px"
+        [globalFilterFields]="globalFilterFields">
+
+        <ng-template pTemplate="header">
+            <tr>
+                @for (col of columns; track col.field) {
+                    <th
+                        [pSortableColumn]="col.field"
+                        [style.width]="col.width">
+
+                        {{ col.header }}
+                        @if (col.sortable !== false) {
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        }
+
+                        @if (col.filterable !== false) {
+                            @switch (col.filterType) {
+                                @case ('date') {
+                                    <p-columnFilter type="date" [field]="col.field" display="menu" [matchModeOptions]="CUSTOM_FILTER_MATCH_MODES.date"></p-columnFilter>
+                                }
+                                @case ('numeric') {
+                                    <p-columnFilter type="numeric" [field]="col.field" display="menu" [matchModeOptions]="CUSTOM_FILTER_MATCH_MODES.numeric"></p-columnFilter>
+                                }
+                                @case ('boolean') {
+                                    <p-columnFilter type="boolean" [field]="col.field" [showMenu]="false" matchMode="equals"></p-columnFilter>
+                                }
+                                @default {
+                                    <p-columnFilter type="text" [field]="col.field" display="menu" [matchModeOptions]="CUSTOM_FILTER_MATCH_MODES.text"></p-columnFilter>
+                                }
+                            }
+                        }
+                    </th>
+                }
+                @if (showEditAction || showDeleteAction || customActionButtons.length > 0) {
+                    <th style="width: 120px">
+                        Ações
+                    </th>
+                }
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+                @for (col of columns; track col.field) {
+                    <td>
+                        @if (col.customTemplate && bodyTemplate) {
+                            <ng-container *ngTemplateOutlet="bodyTemplate; context: { rowData: rowData, column: col }"></ng-container>
+                        } @else {
+                            {{ formatValue(getNestedValue(rowData, col.field), col.field) }}
+                        }
+                    </td>
+                }
+                @if (showEditAction || showDeleteAction || customActionButtons.length > 0)
+                {
+                    <td>
+                        @if (showEditAction) {
+                            <button pButton icon="pi pi-pencil" class="p-button-text p-button-sm"
+                                    (click)="handleEdit(rowData)" pTooltip="Editar"></button>
+                            }
+                        @if (showDeleteAction) {
+                            <button pButton icon="pi pi-trash" class="p-button-text p-button-sm p-button-danger"
+                                    (click)="handleDelete(rowData)" pTooltip="Excluir"></button>
+                            }
+
+                        @for (customButton of customActionButtons; track customButton.tooltip) {
+                                <button pButton
+                                        [icon]="customButton.icon"
+                                        [class]="'p-button-text p-button-sm ' + customButton.classes"
+                                        (click)="customButton.onClick(rowData)"
+                                        [pTooltip]="customButton.tooltip">
+                                </button>
+                            }
+                    </td>
+                }
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td [attr.colspan]="columns.length + 1">Nenhum {{entity}} encontrado.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

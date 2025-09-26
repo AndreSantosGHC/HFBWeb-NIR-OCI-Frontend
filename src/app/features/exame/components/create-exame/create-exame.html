@@ -1,0 +1,29 @@
+<p-card [header]="isEditMode ? 'Editar Exame' : 'Cadastro de Exame'" class="card">
+  <form [formGroup]="exameForm" (ngSubmit)="onSubmit()" class="p-fluid">
+
+    <!-- Nome -->
+    <div class="p-field col-12">
+      <label for="nome" class="block mb-2"><b class="text-red-600 mr-1">*</b> Nome</label>
+      <input id="nome" pInputText formControlName="nome" [class.p-invalid]="nome.invalid && (nome.dirty || nome.touched)" class="w-full"/>
+      <small *ngIf="nome.invalid && (nome.dirty || nome.touched)" class="p-error block mt-1">
+        <span *ngIf="nome.errors?.['required']">Nome é obrigatório.</span>
+        <span *ngIf="nome.errors?.['maxlength']">Nome deve ter no máximo 100 caracteres.</span>
+      </small>
+    </div>
+
+    <!-- Descrição -->
+    <div class="p-field col-12">
+      <label for="descricao" class="block mb-2">Descrição</label>
+      <textarea id="descricao" pInputTextarea formControlName="descricao" rows="3" [class.p-invalid]="descricao.invalid && (descricao.dirty || descricao.touched)" class="w-full"></textarea>
+      <small *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)" class="p-error block mt-1">
+        <span *ngIf="descricao.errors?.['maxlength']">Descrição deve ter no máximo 500 caracteres.</span>
+      </small>
+    </div>
+
+    <!-- Botões -->
+    <div class="col-12 flex gap-2 justify-end mt-4">
+      <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-secondary" (click)="cancelar()"></button>
+      <button pButton type="submit" [label]="isEditMode ? 'Atualizar' : 'Salvar'" icon="pi pi-check" [disabled]="exameForm.invalid"></button>
+    </div>
+  </form>
+</p-card>

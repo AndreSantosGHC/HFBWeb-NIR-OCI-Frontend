@@ -1,0 +1,68 @@
+<p-card [header]="isEditMode ? 'Editar Evolução' : 'Nova Evolução'" class="card">
+  <form [formGroup]="evolucaoForm" (ngSubmit)="onSubmit()" class="p-fluid">
+
+    <!-- Paciente -->
+    <div class="p-field col-12 md:col-6">
+      <label>Paciente</label>
+      <p-select
+        formControlName="pacienteId"
+        [options]="filteredPacientes"
+        optionLabel="nome"
+        [filter]="true"
+        (onFilter)="searchPacientes($event)"
+        filterBy="nome"
+        placeholder="Selecione o paciente"
+        [virtualScroll]="true"
+        [virtualScrollItemSize]="10"
+        class="w-full"
+      >
+        <ng-template let-option pTemplate="item">
+          <div class="flex flex-column gap-1">
+            <div>{{ option.nome }}</div>
+            <small>Prontuário: {{ option.prontuario }} | Enfermaria/Leito: {{ option.enfermaria }}/{{ option.leito }}</small>
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
+
+    <!-- Tipo -->
+    <div class="p-field col-12 md:col-6">
+      <label>Tipo</label>
+      <p-select
+        formControlName="tipo"
+        [options]="tipoOptions"
+        placeholder="Selecione o tipo"
+        class="w-full"
+      ></p-select>
+    </div>
+
+    <!-- Evolução -->
+    <div class="p-field col-12">
+      <label>Evolução</label>
+      <textarea pInputTextarea formControlName="evolucao" rows="4" class="w-full"></textarea>
+    </div>
+
+    <!-- Data e Hora -->
+    <div class="p-field col-12 md:col-4">
+      <label>Data</label>
+      <p-datepicker
+        formControlName="dataEvolucao"
+        [showIcon]="true"
+        dateFormat="dd/mm/yy"
+        class="w-full"
+      ></p-datepicker>
+    </div>
+
+    <div class="p-field col-12 md:col-4">
+      <label>Hora</label>
+      <input pInputText formControlName="horaEvolucao" placeholder="hh:mm" class="w-full"/>
+    </div>
+
+    <!-- Botões -->
+    <div class="col-12 flex gap-2 justify-end mt-4">
+      <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-secondary" (click)="cancelar()"></button>
+      <button pButton type="submit" [label]="isEditMode ? 'Atualizar' : 'Salvar'" icon="pi pi-check" [disabled]="evolucaoForm.invalid"></button>
+    </div>
+
+  </form>
+</p-card>

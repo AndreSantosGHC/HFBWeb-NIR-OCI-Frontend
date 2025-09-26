@@ -1,0 +1,28 @@
+<p-card header="Solicitações de Exames">
+  <!-- <div class="mb-4 flex justify-content-end">
+    <button pButton label="Nova Solicitação" icon="pi pi-plus" (click)="redirectToCreate()"></button>
+  </div> -->
+
+  <app-universal-datatable
+    entity="solicitacao-exames"
+    CreateLabel="Cadastrar Solicitação de Exames"
+    [columns]="columns"
+    [showEditAction]="true"
+    [showDeleteAction]="true"
+    (onEdit)="editar($event)"
+    (onCreate)="redirectToCreate()"
+    (onDelete)="excluir($event)">
+
+    <ng-template #bodyTemplate let-rowData let-column="column">
+      <ng-container [ngSwitch]="column.field">
+        <span *ngSwitchDefault>
+          {{ column.field === 'exames' ? rowData.exames.join(', ') : rowData[column.field] }}
+        </span>
+      </ng-container>
+    </ng-template>
+
+  </app-universal-datatable>
+</p-card>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

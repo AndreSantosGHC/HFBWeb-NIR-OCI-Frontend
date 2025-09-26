@@ -1,0 +1,50 @@
+<p-card header="Listagem de Médicos">
+  <app-universal-datatable
+    entity="medico"
+    CreateLabel="Cadastrar Médico"
+    [rows]="10"
+    [columns]="columns"
+    (onEdit)="editarMedico($event)"
+    (onDelete)="excluirMedico($event)"
+    (onCreate)="redirectToCadastro()"
+    [includeInactive]="false">
+
+    <ng-template #bodyTemplate let-item="item" let-column="column">
+      @switch (column.field) {
+        @case ('ativo') {
+            <p-tag
+                [value]="item.ativo === true ? 'Ativo' : 'Inativo'"
+                [severity]="item.ativo === true ? 'success' : 'danger'"
+            />
+        }
+        @case ('SUS') {
+            <p-tag
+                [value]="item.SUS ? 'Sim' : 'Não'"
+                [severity]="item.SUS ? 'success' : 'warning'"
+            />
+        }
+        @case ('actions') {
+          <div class="flex gap-1">
+            <button pButton
+                    type="button"
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text p-button-primary"
+                    (click)="editarMedico(item)"></button>
+            <button pButton
+                    type="button"
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-text p-button-danger"
+                    (click)="excluirMedico(item)"></button>
+          </div>
+        }
+        @default {
+          {{ getNestedValue(item, column.field) }}
+        }
+      }
+    </ng-template>
+
+  </app-universal-datatable>
+</p-card>
+
+<p-toast />
+<p-confirmDialog />

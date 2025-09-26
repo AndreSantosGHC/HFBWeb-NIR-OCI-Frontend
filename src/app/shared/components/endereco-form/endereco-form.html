@@ -1,0 +1,104 @@
+<div [formGroup]="enderecoForm">
+    <div class="p-field p-grid">
+        <label for="cep" class="block mb-2">
+            CEP
+        </label>
+        <div class="p-col-12 p-md-10">
+            <input
+                type="text"
+                id="cep"
+                formControlName="cep"
+                pInputText
+                placeholder="00000-000"
+                (blur)="onCepBlur()"
+                class="w-full"
+            />
+            <small *ngIf="formControls['cep'].invalid" class="p-error block mt-1">
+                CEP inválido
+            </small>
+        </div>
+    </div>
+
+    <div class="field col-12 md:col-6">
+        <label for="logradouro" class="block mb-2">Logradouro</label>
+        <input
+        type="text"
+        id="logradouro"
+        formControlName="logradouro"
+        pInputText
+        placeholder="Rua, Avenida, etc."
+        class="w-full"
+        >
+    </div>
+
+    <div class="field col-12 md:col-3">
+        <label for="numero" class="block mb-2">Número</label>
+        <input
+        type="text"
+        id="numero"
+        formControlName="numero"
+        pInputText
+        placeholder="123"
+        class="w-full"
+        >
+    </div>
+
+    <div class="field col-12 md:col-6">
+        <label for="complemento" class="block mb-2">Complemento</label>
+        <input
+        type="text"
+        id="complemento"
+        formControlName="complemento"
+        pInputText
+        placeholder="Apartamento, bloco, etc."
+        class="w-full"
+        >
+    </div>
+
+    <div class="field col-12 md:col-6">
+        <label for="bairro" class="block mb-2">Bairro</label>
+        <input
+        type="text"
+        id="bairro"
+        formControlName="bairro"
+        pInputText
+        placeholder="Centro"
+        class="w-full"
+        >
+    </div>
+
+    <div class="field col-12 md:col-6">
+        <label for="cidade" class="block mb-2">Cidade</label>
+        <input
+        type="text"
+        id="cidade"
+        formControlName="cidade"
+        pInputText
+        placeholder="São Paulo"
+        class="w-full"
+        >
+    </div>
+
+    <div class="field col-12 md:col-3">
+        <label for="estado" class="block mb-2">Estado</label>
+        <p-select
+        id="estado"
+        formControlName="estado"
+        [options]="estados"
+        placeholder="Selecione"
+        class="w-full"
+        ></p-select>
+    </div>
+
+    <!-- <div class="field col-12 md:col-3">
+        <label for="pais" class="block mb-2">País</label>
+        <input
+        type="text"
+        id="pais"
+        formControlName="pais"
+        pInputText
+        class="w-full"
+        readonly
+        >
+    </div> -->
+</div>

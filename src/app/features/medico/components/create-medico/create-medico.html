@@ -1,0 +1,169 @@
+<p-card [header]="isEditMode ? 'Editar Médico' : 'Cadastro de Médico'" class="card">
+  <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="p-fluid">
+
+    <!-- NOME -->
+    <div class="p-field col-12 md:col-6">
+      <label for="nome" class="block mb-2">
+        <b class="text-red-600 mr-1">*</b> Nome
+      </label>
+      <input
+        id="nome"
+        pInputText
+        formControlName="nome"
+        [class.p-invalid]="nome.invalid && (nome.dirty || nome.touched)"
+        class="w-full"
+      />
+      @if (nome.invalid && (nome.dirty || nome.touched)) {
+        <small class="p-error block mt-1">
+          Nome é obrigatório.
+        </small>
+      }
+    </div>
+
+    <!-- CNS -->
+    <div class="p-field col-12 md:col-6">
+      <label for="cns" class="block mb-2">CNS</label>
+      <input
+        id="cns"
+        pInputText
+        formControlName="cns"
+        class="w-full"
+      />
+    </div>
+
+    <!-- DATA DE ENTRADA -->
+    <div class="p-field col-12 md:col-6">
+      <label for="dataEntrada" class="block mb-2">Data de Entrada</label>
+      <input
+        id="dataEntrada"
+        type="date"
+        pInputText
+        formControlName="dataEntrada"
+        class="w-full"
+      />
+    </div>
+
+    <!-- CBO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="cbo" class="block mb-2">CBO</label>
+      <input
+        id="cbo"
+        pInputText
+        formControlName="cbo"
+        class="w-full"
+      />
+    </div>
+
+    <!-- DESCRIÇÃO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="descricao" class="block mb-2">Descrição SUS</label>
+      <textarea
+        id="descricao"
+        pInputTextarea
+        formControlName="descricao"
+        rows="3"
+        class="w-full"
+      ></textarea>
+    </div>
+
+    <!-- SUS -->
+    <div class="p-field col-12 md:col-6 flex align-items-center gap-2">
+      <p-checkbox
+        formControlName="SUS"
+        binary="true"
+        inputId="sus"
+      ></p-checkbox>
+      <label for="sus">SUS</label>
+    </div>
+
+    <!-- VINCULAÇÃO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="vinculacao" class="block mb-2">Vinculação</label>
+      <input
+        id="vinculacao"
+        pInputText
+        formControlName="vinculacao"
+        class="w-full"
+      />
+    </div>
+
+    <!-- TIPO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="tipo" class="block mb-2">Tipo</label>
+      <input
+        id="tipo"
+        pInputText
+        formControlName="tipo"
+        class="w-full"
+      />
+    </div>
+
+    <!-- SUBTIPO -->
+    <div class="p-field col-12 md:col-6">
+      <label for="subtipo" class="block mb-2">Subtipo</label>
+      <input
+        id="subtipo"
+        pInputText
+        formControlName="subtipo"
+        class="w-full"
+      />
+    </div>
+
+    <!-- PORTARIA 134 -->
+    <div class="p-field col-12 md:col-6">
+      <label for="portaria134" class="block mb-2">Portaria 134</label>
+      <input
+        id="portaria134"
+        pInputText
+        formControlName="portaria134"
+        class="w-full"
+      />
+    </div>
+
+    <!-- CH Outro -->
+    <div class="p-field col-12 md:col-3">
+      <label for="chOutro" class="block mb-2">CH Outro</label>
+      <input id="chOutro" type="number" pInputText formControlName="chOutro" class="w-full" />
+    </div>
+
+    <!-- CH Amb -->
+    <div class="p-field col-12 md:col-3">
+      <label for="chAmb" class="block mb-2">CH Amb.</label>
+      <input id="chAmb" type="number" pInputText formControlName="chAmb" class="w-full" />
+    </div>
+
+    <!-- CH Hosp -->
+    <div class="p-field col-12 md:col-3">
+      <label for="chHosp" class="block mb-2">CH Hosp.</label>
+      <input id="chHosp" type="number" pInputText formControlName="chHosp" class="w-full" />
+    </div>
+
+    <!-- TOTAL -->
+    <div class="p-field col-12 md:col-3">
+      <label for="total" class="block mb-2">Total</label>
+      <input id="total" type="number" pInputText formControlName="total" class="w-full" />
+    </div>
+
+    <!-- BOTÕES -->
+    <div class="col-12 flex gap-2 justify-end mt-4">
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-secondary"
+        (click)="cancelar()"
+      ></button>
+
+      <button
+        pButton
+        type="submit"
+        [label]="isEditMode ? 'Atualizar' : 'Salvar'"
+        icon="pi pi-check"
+        [disabled]="cadastroForm.invalid"
+      ></button>
+    </div>
+
+  </form>
+</p-card>
+<p-toast />

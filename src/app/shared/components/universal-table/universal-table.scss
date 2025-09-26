@@ -1,0 +1,83 @@
+// // universal-datatable.component.scss
+
+.universal-datatable {
+  padding: 1rem;
+
+  .table-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    .toolbar-right {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+}
+
+// .universal-datatable {
+//   padding: 1rem;
+
+//   .table-toolbar {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin-bottom: 1rem;
+//     padding: 1rem;
+//     background: #f8f9fa;
+//     border-radius: 6px;
+
+//     .toolbar-right {
+//       display: flex;
+//       gap: 0.5rem;
+//     }
+//   }
+
+//   .cell-content {
+//     white-space: nowrap;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     max-width: 200px;
+//     display: block;
+//   }
+
+//   .action-buttons {
+//     display: flex;
+//     gap: 0.25rem;
+
+//     button {
+//       width: 2rem;
+//       height: 2rem;
+//     }
+//   }
+
+//   .empty-message, .loading-message {
+//     text-align: center;
+//     padding: 2rem;
+
+//     .empty-state {
+//       color: #6c757d;
+
+//       i {
+//         margin-bottom: 1rem;
+//       }
+//     }
+//   }
+
+//   :host ::ng-deep {
+//     .p-datatable {
+//       .p-datatable-header {
+//         background: transparent;
+//         border: none;
+//         padding: 0;
+//       }
+
+//       .p-paginator {
+//         border: none;
+//         background: transparent;
+//       }
+//     }
+//   }
+// }

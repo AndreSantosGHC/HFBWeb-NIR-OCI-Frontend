@@ -1,0 +1,10 @@
+.exames-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem 1rem; // espaçamento vertical 0.5rem, horizontal 1rem
+}
+
+.exame-item {
+    display: flex;
+    align-items: center;
+}

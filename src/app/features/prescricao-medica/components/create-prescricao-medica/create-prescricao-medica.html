@@ -1,0 +1,149 @@
+<p-card [header]="isEditMode ? 'Editar Prescrição Médica' : 'Nova Prescrição Médica'">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-fluid">
+
+        <div class="p-field p-col-12">
+            <label for="paciente">Paciente</label>
+            <p-select id="paciente" formControlName="pacienteId" [options]="filteredPacientes" optionLabel="nome"
+                [filter]="true" (onFilter)="searchPacientes($event)" filterBy="nome" placeholder="Selecione o paciente"
+                [virtualScroll]="true" [virtualScrollItemSize]="10"
+                [class]="'w-full' + (form.get('pacienteId')?.invalid && form.get('pacienteId')?.touched ? ' p-invalid' : '')"
+                [disabled]="isEditMode">
+                <ng-template let-option pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <div>
+                            <div>{{ option.nome }}</div>
+                            <small class="text-color-secondary">Prontuário: {{ option.prontuario }}</small>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-select>
+        </div>
+
+        <hr>
+
+        <h3>Prescrição</h3>
+        <div class="p-grid">
+            <div class="p-field p-col-12 md:p-col-6">
+                <label for="medicamento">Medicamento</label>
+                <input pInputText id="medicamento" formControlName="medicamento">
+            </div>
+            <div class="p-field p-col-12 md:p-col-6">
+                <label for="dose">Dose</label>
+                <input pInputText id="dose" formControlName="dose">
+            </div>
+            <div class="p-field p-col-12 md:p-col-6">
+                <label for="dataInicio">Data de Início</label>
+                <p-datePicker id="dataInicio" formControlName="dataInicio" dateFormat="dd/mm/yy"></p-datePicker>
+            </div>
+            <div class="p-field p-col-12 md:p-col-6">
+                <label for="horario">Horário</label>
+                <input pInputText id="horario" formControlName="horario">
+            </div>
+            <div class="p-field p-col-12">
+                <label for="observacoes">Observações</label>
+                <input pInputText id="observacoes" formControlName="observacoes" rows="3">
+            </div>
+        </div>
+
+        <hr>
+
+        <h3>Procedimentos</h3>
+        <div class="p-grid">
+            <div class="p-field p-col-12 md:p-col-4">
+                <label for="tipoProcedimento">Tipo</label>
+                <p-select id="tipoProcedimento" formControlName="tipoProcedimento" [options]="tipoProcedimentoOptions"
+                    placeholder="Selecione"></p-select>
+            </div>
+            <div class="p-field p-col-12 md:p-col-4">
+                <label for="dataSolicitacaoProcedimento">Data solicitação</label>
+                <p-datePicker id="dataSolicitacaoProcedimento" formControlName="dataSolicitacaoProcedimento"
+                    dateFormat="dd/mm/yy"></p-datePicker>
+            </div>
+            <div class="p-field p-col-12 md:p-col-4">
+                <label for="horaSolicitacaoProcedimento">Hora solicitação</label>
+                <input pInputText id="horaSolicitacaoProcedimento" formControlName="horaSolicitacaoProcedimento"
+                    placeholder="hh:mm">
+            </div>
+            <div class="p-field p-col-12">
+                <label for="justificativaProcedimento">Justificativa do Solicitante</label>
+                <input pInputText id="justificativaProcedimento" formControlName="justificativaProcedimento" rows="2">
+            </div>
+        </div>
+
+        <hr>
+
+        <h3>Notificação de Antimicrobianos</h3>
+        <div class="p-grid">
+            <div class="p-field p-col-12">
+                <label for="indicacaoClinica">1) Indicação Clínica</label>
+                <input pInputText id="indicacaoClinica" formControlName="indicacaoClinica" rows="2">
+            </div>
+            <div class="p-field p-col-12 md:p-col-6 flex align-items-center">
+                <label for="terapeuticaEmpirica" class="mr-2">4.1) Terapêutica empírica</label>
+                <p-checkbox id="terapeuticaEmpirica" formControlName="terapeuticaEmpirica" [binary]="true"></p-checkbox>
+            </div>
+            <div class="p-field p-col-12 md:p-col-6 flex align-items-center">
+                <label for="profilatica" class="mr-2">4.3) Profilática</label>
+                <p-checkbox id="profilatica" formControlName="profilatica" [binary]="true"></p-checkbox>
+            </div>
+            <div class="p-field p-col-12 md:p-col-6">
+                <label for="infeccaoHospitalar">5) Infecção Hospitalar</label>
+                <div class="flex flex-wrap gap-4 mt-2">
+                    <div class="flex align-items-center">
+                        <p-radioButton id="infeccaoHospitalarSim" name="infeccaoHospitalar" [value]="true"
+                            formControlName="infeccaoHospitalar"></p-radioButton>
+                        <label for="infeccaoHospitalarSim" class="ml-2">Sim</label>
+                    </div>
+                    <div class="flex align-items-center">
+                        <p-radioButton id="infeccaoHospitalarNao" name="infeccaoHospitalar" [value]="false"
+                            formControlName="infeccaoHospitalar"></p-radioButton>
+                        <label for="infeccaoHospitalarNao" class="ml-2">Não</label>
+                    </div>
+                </div>
+            </div>
+            <div class="p-field p-col-12 md:p-col-6">
+                <label for="infeccaoPosCirurgica">6) Infecção Pós-Cirúrgica</label>
+                <div class="flex flex-wrap gap-4 mt-2">
+                    <div class="flex align-items-center">
+                        <p-radioButton id="infeccaoPosCirurgicaSim" name="infeccaoPosCirurgica" [value]="true"
+                            formControlName="infeccaoPosCirurgica"></p-radioButton>
+                        <label for="infeccaoPosCirurgicaSim" class="ml-2">Sim</label>
+                    </div>
+                    <div class="flex align-items-center">
+                        <p-radioButton id="infeccaoPosCirurgicaNao" name="infeccaoPosCirurgica" [value]="false"
+                            formControlName="infeccaoPosCirurgica"></p-radioButton>
+                        <label for="infeccaoPosCirurgicaNao" class="ml-2">Não</label>
+                    </div>
+                </div>
+            </div>
+            <div class="p-field p-col-12 md:p-col-6 flex align-items-center">
+                <label for="terapeuticaGermeIsolado" class="mr-2">4.2) Terapêutica por germe isolado</label>
+                <p-checkbox id="terapeuticaGermeIsolado" formControlName="terapeuticaGermeIsolado"
+                    [binary]="true"></p-checkbox>
+            </div>
+            <div class="p-field p-col-12 md:p-col-6">
+                <label for="microrganismo">Microrganismo</label>
+                <input pInputText id="microrganismo" formControlName="microrganismo">
+            </div>
+            <div class="p-field p-col-12 md:p-col-6">
+                <label for="tempoProvavelUso">4) Tempo provável de uso</label>
+                <input pInputText id="tempoProvavelUso" formControlName="tempoProvavelUso">
+            </div>
+            <div class="p-field p-col-12 md:p-col-6">
+                <label for="materialClinico">Material Clínico</label>
+                <input pInputText id="materialClinico" formControlName="materialClinico">
+            </div>
+            <div class="p-field p-col-12">
+                <label for="assinaturaCarimbo"> Assinatura e Carimbo</label>
+                <input pInputText id="assinaturaCarimbo" formControlName="assinaturaCarimbo">
+            </div>
+        </div>
+
+        <div class="flex justify-content-end gap-2 mt-4">
+            <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-secondary" (click)="cancelar()"></p-button>
+            <p-button type="submit" [label]="isEditMode ? 'Atualizar' : 'Salvar'" icon="pi pi-check"></p-button>
+        </div>
+    </form>
+</p-card>
+
+<p-toast></p-toast>

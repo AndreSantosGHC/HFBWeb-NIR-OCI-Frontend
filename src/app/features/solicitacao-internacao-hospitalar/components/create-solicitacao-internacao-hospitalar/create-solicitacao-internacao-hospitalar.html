@@ -1,0 +1,217 @@
+<p-card [header]="isEditMode ? 'Editar Solicitação de Internação' : 'Nova Solicitação de Internação'">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-fluid">
+
+    <h3>IDENTIFICAÇÃO DO ESTABELECIMENTO DE SAÚDE</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Nome do estabelecimento solicitante</label>
+        <input pInputText id="estabelecimentoSolicitante" formControlName="nomeEstabelecimentoSolicitante" class="w-full"
+          [class.p-invalid]="form.get('nomeEstabelecimentoSolicitante')?.invalid && form.get('nomeEstabelecimentoSolicitante')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>CNES (solicitante)</label>
+        <input pInputText id="cnesSolicitante" formControlName="cnesSolicitante" class="w-full"
+          [class.p-invalid]="form.get('cnesSolicitante')?.invalid && form.get('cnesSolicitante')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Nome do estabelecimento executante</label>
+        <input pInputText id="estabelecimentoExecutante" formControlName="nomeEstabelecimentoExecutante" class="w-full"
+          [class.p-invalid]="form.get('nomeEstabelecimentoExecutante')?.invalid && form.get('nomeEstabelecimentoExecutante')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>CNES (executante)</label>
+        <input pInputText id="cnesExecutante" formControlName="cnesExecutante" class="w-full"
+          [class.p-invalid]="form.get('cnesExecutante')?.invalid && form.get('cnesExecutante')?.touched">
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>IDENTIFICAÇÃO DO PACIENTE</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-12">
+        <label for="paciente">Paciente</label>
+        <p-select id="paciente" formControlName="pacienteId" [options]="filteredPacientes" optionLabel="nome"
+          [filter]="true" (onFilter)="searchPacientes($event)" filterBy="nome" placeholder="Selecione o paciente"
+          [virtualScroll]="true" [virtualScrollItemSize]="10"
+          [class]="'w-full' + (form.get('pacienteId')?.invalid && form.get('pacienteId')?.touched ? ' p-invalid' : '')">
+          <ng-template let-option pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>
+                <div>{{ option.nome }}</div>
+                <small class="text-color-secondary">Prontuário: {{ option.prontuario }}</small>
+              </div>
+            </div>
+          </ng-template>
+        </p-select>
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Prontuário</label>
+        <input pInputText [value]="selectedPatient?.prontuario" readonly class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>CNS</label>
+        <input pInputText [value]="selectedPatient?.cns" readonly class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Data de nascimento</label>
+        <input pInputText [value]="selectedPatient?.dataNascimento | date:'dd/MM/yyyy'" readonly class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Telefone</label>
+        <input pInputText [value]="selectedPatient?.telefone" readonly class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Endereço</label>
+        <input pInputText [value]="selectedPatient?.endereco" readonly class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Código IBGE município</label>
+        <input pInputText id="codigoIbgeMunicipio" formControlName="codigoIbgeMunicipio" class="w-full"
+          [class.p-invalid]="form.get('codigoIbgeMunicipio')?.invalid && form.get('codigoIbgeMunicipio')?.touched">
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>JUSTIFICATIVA DA INTERNAÇÃO</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-12">
+        <label>Principais sinais e sintomas clínicos</label>
+        <textarea pInputTextarea id="sinaisSintomas" formControlName="principaisSinaisSintomas" rows="3" class="w-full"
+          [class.p-invalid]="form.get('principaisSinaisSintomas')?.invalid && form.get('principaisSinaisSintomas')?.touched"></textarea>
+      </div>
+      <div class="p-field p-col-12">
+        <label>Condições que justificam a internação</label>
+        <textarea pInputTextarea id="condicoesInternacao" formControlName="condicoesJustificamInternacao" rows="3" class="w-full"
+          [class.p-invalid]="form.get('condicoesJustificamInternacao')?.invalid && form.get('condicoesJustificamInternacao')?.touched"></textarea>
+      </div>
+      <div class="p-field p-col-12">
+        <label>Principais resultados de provas diagnósticas</label>
+        <textarea pInputTextarea id="resultadosExames" formControlName="principaisResultadosProvasDiagnosticas" rows="3" class="w-full"
+          [class.p-invalid]="form.get('principaisResultadosProvasDiagnosticas')?.invalid && form.get('principaisResultadosProvasDiagnosticas')?.touched"></textarea>
+      </div>
+      <div class="p-field p-col-12 md:p-col-4">
+        <label>Diagnóstico inicial</label>
+        <input pInputText id="diagnosticoInicial" formControlName="diagnosticoInicial" class="w-full"
+          [class.p-invalid]="form.get('diagnosticoInicial')?.invalid && form.get('diagnosticoInicial')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-4">
+        <label>HD Principal</label>
+        <input pInputText id="hdPrincipal" formControlName="hdPrincipal" class="w-full"
+          [class.p-invalid]="form.get('hdPrincipal')?.invalid && form.get('hdPrincipal')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-4">
+        <label>HD Secundário</label>
+        <input pInputText id="hdSecundario" formControlName="hdSecundario" class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-4">
+        <label>HD causas associadas</label>
+        <input pInputText id="hdCausasAssociadas" formControlName="hdCausasAssociadas" class="w-full">
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>PROCEDIMENTO SOLICITADO</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-12">
+        <label>Descrição do procedimento solicitado</label>
+        <input pInputText id="descricaoProcedimento" formControlName="descricaoProcedimentoSolicitado" class="w-full"
+          [class.p-invalid]="form.get('descricaoProcedimentoSolicitado')?.invalid && form.get('descricaoProcedimentoSolicitado')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Código do procedimento</label>
+        <input pInputText id="codigoProcedimento" formControlName="codigoProcedimento" class="w-full"
+          [class.p-invalid]="form.get('codigoProcedimento')?.invalid && form.get('codigoProcedimento')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Clínica</label>
+        <input pInputText id="clinica" formControlName="clinica" class="w-full"
+          [class.p-invalid]="form.get('clinica')?.invalid && form.get('clinica')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Caráter da internação</label>
+        <input pInputText id="caracterInternacao" formControlName="caraterInternacao" class="w-full"
+          [class.p-invalid]="form.get('caraterInternacao')?.invalid && form.get('caraterInternacao')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Nº docs profissional solicitante/assistente</label>
+        <input pInputText id="numDocsProfissionalSolicitante" formControlName="numDocsProfissionalSolicitante" class="w-full"
+          [class.p-invalid]="form.get('numDocsProfissionalSolicitante')?.invalid && form.get('numDocsProfissionalSolicitante')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Nome do profissional solicitante/assistente</label>
+        <input pInputText id="nomeProfissionalSolicitante" formControlName="nomeProfissionalSolicitante" class="w-full"
+          [class.p-invalid]="form.get('nomeProfissionalSolicitante')?.invalid && form.get('nomeProfissionalSolicitante')?.touched">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Data da solicitação</label>
+        <p-datepicker id="dataSolicitacao" formControlName="dataSolicitacao" dateFormat="dd/mm/yy" class="w-full"
+          [class.p-invalid]="form.get('dataSolicitacao')?.invalid && form.get('dataSolicitacao')?.touched"></p-datepicker>
+      </div>
+      <div class="p-field p-col-12">
+        <label>Assinatura e carimbo (nº do registro do conselho)</label>
+        <input pInputText id="assinaturaCarimbo" formControlName="assinaturaCarimbo" class="w-full"
+          [class.p-invalid]="form.get('assinaturaCarimbo')?.invalid && form.get('assinaturaCarimbo')?.touched">
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>CAUSAS EXTERNAS (acidentes/violências)</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-12 md:p-col-4">
+        <p-checkbox name="acidenteTransito" formControlName="acidenteTransito" [binary]="true"></p-checkbox>
+        <label for="acidenteTransito">Acidente de trânsito</label>
+      </div>
+      <div class="p-field p-col-12 md:p-col-4">
+        <p-checkbox name="acidenteTrabalhoTipico" formControlName="acidenteTrabalhoTipico" [binary]="true"></p-checkbox>
+        <label for="acidenteTrabalhoTipico">Acidente trabalho típico</label>
+      </div>
+      <div class="p-field p-col-12 md:p-col-4">
+        <p-checkbox name="acidenteTrabalhoTrajeto" formControlName="acidenteTrabalhoTrajeto" [binary]="true"></p-checkbox>
+        <label for="acidenteTrabalhoTrajeto">Acidente trabalho trajeto</label>
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>CNPJ seguradora</label>
+        <input pInputText id="cnpjSeguradora" formControlName="cnpjSeguradora" class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Nº do bilhete</label>
+        <input pInputText id="numBilhete" formControlName="numBilhete" class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Série</label>
+        <input pInputText id="serie" formControlName="serie" class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>CNPJ empresa</label>
+        <input pInputText id="cnpjEmpresa" formControlName="cnpjEmpresa" class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>CNAE da empresa</label>
+        <input pInputText id="cnaeEmpresa" formControlName="cnaeEmpresa" class="w-full">
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>CBOR</label>
+        <input pInputText id="cbor" formControlName="cbor" class="w-full">
+      </div>
+      <div class="p-field p-col-12">
+        <label>Vínculo</label>
+        <div class="flex flex-wrap gap-3">
+          <div *ngFor="let vinculo of vinculosOptions" class="flex align-items-center">
+            <p-radioButton [inputId]="vinculo" [name]="'vinculo'" [value]="vinculo"
+              formControlName="vinculo"></p-radioButton>
+            <label [for]="vinculo" class="ml-2">{{ vinculo }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-col-12 flex gap-2 justify-end mt-4">
+      <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="cancelar()"></button>
+      <button pButton type="submit" label="Salvar" [disabled]="form.invalid"></button>
+    </div>
+  </form>
+</p-card>

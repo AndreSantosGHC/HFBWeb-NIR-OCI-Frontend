@@ -1,0 +1,139 @@
+<p-card header="Risco Cirúrgico">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-fluid">
+
+    <!-- ================== DADOS CLÍNICOS ================== -->
+    <h3>Dados Clínicos</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>História Patológica Pregressa</label>
+        <input pInputText formControlName="historiaPatologica" class="w-full" />
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Alergias</label>
+        <input pInputText formControlName="alergias" class="w-full" />
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Interrogatório Dirigido</label>
+        <input pInputText formControlName="interrogatorioDirigido" class="w-full" />
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Medicamentos em Uso</label>
+        <input pInputText formControlName="medicamentosEmUso" class="w-full" />
+      </div>
+    </div>
+
+    <!-- ================== DISTÚRBIOS DE COAGULAÇÃO ================== -->
+    <div class="p-grid">
+        <div class="p-field p-col-12 md:p-col-6" *ngFor="let item of distCoagulacao">
+            <label>{{ item.label }}</label>
+            <div class="flex flex-wrap gap-4">
+
+                <p-radioButton name="{{item.controlName}}" value="SIM" formControlName="{{item.controlName}}" [inputId]="item.controlName + '_sim'"></p-radioButton>
+                <label [for]="item.controlName + '_sim'" class="ml-2">SIM</label>
+                <p-radioButton name="{{item.controlName}}" [inputId]="item.controlName + '_nao'" value="NAO" formControlName="{{item.controlName}}"></p-radioButton>
+                <label [for]="item.controlName + '_nao'" class="ml-2">NÃO</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================== EXAME FÍSICO ================== -->
+    <h3>Exame Físico</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-3">
+        <label>PA</label>
+        <input pInputText formControlName="pa" />
+      </div>
+      <div class="p-field p-col-3">
+        <label>FC</label>
+        <input pInputText formControlName="fc" />
+      </div>
+      <div class="p-field p-col-3">
+        <label>T</label>
+        <input pInputText formControlName="temperatura" />
+      </div>
+      <div class="p-field p-col-3">
+        <label>Peso</label>
+        <input pInputText formControlName="peso" />
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>22 - ACV</label>
+        <input pInputText formControlName="acv" />
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>23 - Aparelho Respiratório</label>
+        <input pInputText formControlName="aparelhoRespiratorio" />
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>24 - Abdome</label>
+        <input pInputText formControlName="abdome" />
+      </div>
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>25 - Membros</label>
+        <input pInputText formControlName="membros" />
+      </div>
+      <div class="p-field p-col-12">
+        <label>26 - Outros Achados</label>
+        <textarea pInputTextarea formControlName="outrosAchados"></textarea>
+      </div>
+    </div>
+
+    <!-- ================== EXAMES COMPLEMENTARES ================== -->
+    <h3>Exames Complementares</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-3">
+        <label>HB</label>
+        <input pInputText formControlName="hb" />
+      </div>
+      <div class="p-field p-col-3">
+        <label>HCT</label>
+        <input pInputText formControlName="hct" />
+      </div>
+      <div class="p-field p-col-3">
+        <label>Glicose</label>
+        <input pInputText formControlName="glicose" />
+      </div>
+      <div class="p-field p-col-3">
+        <label>Creatinina</label>
+        <input pInputText formControlName="creatinina" />
+      </div>
+
+      <div class="p-field p-col-3">
+        <label>31 - PTT</label>
+        <input pInputText formControlName="ptt" />
+      </div>
+      <div class="p-field p-col-3">
+        <label>32 - Outros</label>
+        <input pInputText formControlName="outros" />
+      </div>
+      <div class="p-field p-col-3">
+        <label>33 - ECG</label>
+        <input pInputText formControlName="ecg" />
+      </div>
+      <div class="p-field p-col-3">
+        <label>34 - Raio X de Tórax</label>
+        <input pInputText formControlName="raioxTorax" />
+      </div>
+    </div>
+
+    <!-- ================== RISCO CIRÚRGICO ================== -->
+    <h3>Risco Cirúrgico</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-6">
+        <label>Risco Cirúrgico</label>
+        <input pInputText formControlName="riscoCirurgico" />
+      </div>
+      <div class="p-field p-col-6">
+        <label>Recomendações Especiais</label>
+        <input pInputText formControlName="recomendacoesEspeciais" />
+      </div>
+    </div>
+
+    <!-- ================== BOTÕES ================== -->
+    <div class="p-col-12 flex gap-2 justify-end mt-4">
+      <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="cancelar()"></button>
+      <button pButton type="submit" label="Salvar"></button>
+    </div>
+  </form>
+</p-card>

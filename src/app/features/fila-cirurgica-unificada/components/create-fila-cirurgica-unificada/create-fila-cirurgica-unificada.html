@@ -1,0 +1,94 @@
+<p-card header="Inserção de Paciente na Fila Cirúrgica Unificada">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-fluid">
+
+    <h3>Dados do Paciente</h3>
+    <div class="p-grid">
+        <div class="field mb-4">
+            <label for="paciente">Paciente</label>
+            <p-select
+                id="paciente"
+                formControlName="pacienteId"
+                [options]="filteredPacientes"
+                optionLabel="nome"
+                [filter]="true"
+                (onFilter)="searchPacientes($event)"
+                filterBy="nome"
+                placeholder="Selecione o paciente"
+                [virtualScroll]="true"
+                [virtualScrollItemSize]="10"
+                [class]="'w-full' + (form.get('pacienteId')?.invalid && form.get('pacienteId')?.touched ? ' p-invalid' : '')">
+
+                <ng-template let-option pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <div>
+                            <div>{{ option.nome }}</div>
+                            <small class="text-color-secondary">
+                                Prontuário: {{ option.prontuario }}
+                            </small>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-select>
+        </div>
+
+      <div *ngIf="selectedPaciente" class="p-col-12">
+        <p><strong>Prontuário:</strong> {{ selectedPaciente.prontuario }}</p>
+        <p><strong>CNS:</strong> {{ selectedPaciente.cns }}</p>
+        <p><strong>Data de Nascimento:</strong> {{ selectedPaciente.dataNascimento }}</p>
+        <p><strong>Telefone Fixo:</strong> {{ selectedPaciente.telefoneFixo }}</p>
+        <p><strong>Celular:</strong> {{ selectedPaciente.celular }}</p>
+        <p><strong>Endereço:</strong> {{ selectedPaciente.endereco }}, {{ selectedPaciente.numero }}</p>
+        <p><strong>Bairro:</strong> {{ selectedPaciente.bairro }}, <strong>Cidade:</strong> {{ selectedPaciente.cidade }}</p>
+      </div>
+    </div>
+
+    <h3>Dados da Cirurgia</h3>
+    <div class="p-grid">
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Nome do médico*</label>
+        <input pInputText formControlName="nomeMedico" class="w-full"/>
+      </div>
+
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Data de Entrada na Fila</label>
+        <p-datepicker formControlName="dataEntradaFila" class="w-full"></p-datepicker>
+      </div>
+
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Especialidade*</label>
+        <input pInputText formControlName="especialidade" class="w-full"/>
+      </div>
+
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Prioridade*</label>
+        <p-select formControlName="prioridade" [options]="prioridades" class="w-full"></p-select>
+      </div>
+
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Lateralidade*</label>
+        <p-select formControlName="lateralidade" [options]="lateralidades" class="w-full"></p-select>
+      </div>
+
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Risco Cirúrgico*</label>
+        <p-select formControlName="riscoCirurgico" [options]="riscosCirurgicos" class="w-full"></p-select>
+      </div>
+
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Assinatura do médico*</label>
+        <input pInputText formControlName="assinaturaMedico" class="w-full"/>
+      </div>
+
+      <div class="p-field p-col-12 md:p-col-6">
+        <label>Data da solicitação*</label>
+        <p-datepicker formControlName="dataSolicitacao" class="w-full"></p-datepicker>
+      </div>
+
+      <!-- Botões -->
+      <div class="p-col-12 flex gap-2 justify-end mt-4">
+        <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="cancelar()"></button>
+        <button pButton type="submit" label="Salvar"></button>
+      </div>
+    </div>
+  </form>
+</p-card>
